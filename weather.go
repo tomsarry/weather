@@ -1,6 +1,7 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 	"io/ioutil"
 	"net/http"
@@ -9,12 +10,37 @@ import (
 	"github.com/joho/godotenv"
 )
 
+type weather struct {
+	ID   int    `json:"id"`
+	Main string `json:"main"`
+	Desc string `json:"description"`
+	Icon string `json:"icon"`
+}
+
+type mainResp struct {
+	Temp     float32 `json:"temp"`
+	FLike    float32 `json:"feels_like"`
+	TMin     float32 `json:"temp_min"`
+	TMax     float32 `json:"temp_max"`
+	Pressure float32 `json:"pressure"`
+}
+
+type misc struct {
+	Country string `json:"country"`
+}
+
+type response struct {
+	Weather []weather `json:"weather"`
+	Main    mainResp  `json:"main"`
+	Misc    misc      `json:"sys"`
+}
+
 func init() {
 	godotenv.Load(".env")
 }
 
 func getURL(city string) string {
-	return "http://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=" + os.Getenv("API_KEY")
+	return "http://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=" + os.Getenv("API_KEY") + "&units=metric"
 }
 
 func main() {
@@ -50,5 +76,10 @@ func main() {
 		panic("Error : Could not read response.")
 	}
 
-	fmt.Println(string(body))
+	res := response{}
+	json.Unmarshal([]byte(body), &res)
+
+	fmt.Printf("Results for %s, %s:\n", city, res.Misc.Country)
+	fmt.Printf("Temperature: %.1f\n", res.Main.Temp)
+	fmt.Printf("Weather: %s - (%s)\n", res.Weather[0].Main, res.Weather[0].Desc)
 }
