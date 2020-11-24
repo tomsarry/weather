@@ -8,7 +8,7 @@ Make sure you have Go installed on your machine (1.14+).
 
 ```
 go get github.com/tomsarry/weather
-go install github.com/tomsarry/weather/cmd/weather
+go install github.com/tomsarry/weather
 ```
 
 ## How to use it
