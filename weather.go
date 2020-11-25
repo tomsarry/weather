@@ -45,7 +45,7 @@ func main() {
 			fmt.Println("[weather] Error: Expected arguments but received none. (No prefered city saved)")
 			os.Exit(1)
 		}	
-		fmt.Printf("Using prefered city: %s.\n", pref.City)	
+		fmt.Printf("[weather] Using prefered city: %s.\n", pref.City)	
 		city = pref.City		
 	} else {
 		if args[0] == "-c" {
@@ -96,6 +96,11 @@ func main() {
 
 	res := models.Response{}
 	json.Unmarshal([]byte(body), &res)
+
+	if len(res.Weather) == 0 {
+		fmt.Printf("[weather] Did not receive a valid response, are you sure about the city name: %s ?\n", city)
+		return
+	}
 
 	fmt.Printf("[weather] Results for %s, %s:\n", city, res.Misc.Country)
 	fmt.Printf("[weather] Temperature: %.1f°C\n", res.Main.Temp)
