@@ -31,26 +31,45 @@ Now, to quickly find the weather of your saved location you can simply do:
 $ weather
 ```
 
+* You can also combine the flags to save a city and display the weather at the same time:
+```
+$ weather -cf "city"
+$ weather -fc "city"
+$ weather -f -c "city"
+$ weather -c -f "city"
+```
+
 ### Example
 
 For instance if you want to understand how cold it can get in the magnificent city of Montreal, use:
 
 ```
 $ weather -c "Montreal"
-Results for Montreal, CA:
-Temperature: -5.4°C
-Weather: Clouds - (overcast clouds)
+[weather] Results for Montreal, CA:
+[weather] Temperature: -5.4°C
+[weather] Weather: Clouds - (overcast clouds)
 ```
 
 or:
 
 ```
 $ weather -f "Montreal"
-New prefered city is Montreal.
+[weather] New prefered city is Montreal.
 
 $ weather
-Using prefered city: Montreal.
-Results for Montreal, CA:
-Temperature: -5.4°C
-Weather: Clouds - (overcast clouds)
+[weather] Using prefered city: Montreal.
+[weather] Results for Montreal, CA:
+[weather] Temperature: -5.4°C
+[weather] Weather: Clouds - (overcast clouds)
 ```
+or even:
+
+```
+$ weather -cf "Montreal"
+[weather] New prefered city is Montreal.
+[weather] Using prefered city: Montreal.
+[weather] Results for Montreal, CA:
+[weather] Temperature: 8.0°C
+[weather] Weather: Clear - (clear sky)
+```
+
