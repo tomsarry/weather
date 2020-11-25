@@ -27,7 +27,7 @@ func main() {
 	jsonFile, err := os.Open("pref.json")
 		
 	if err != nil {
-		panic(err.Error())
+		fmt.Println("[weather] Did not find `pref.json`, creating it now.")
 	}
 
 	defer jsonFile.Close()
@@ -42,7 +42,7 @@ func main() {
 	if len(args) == 0 {
 
 		if pref.City == "" {
-			fmt.Println("Error: Expected arguments but received none. (No prefered city saved)")
+			fmt.Println("[weather] Error: Expected arguments but received none. (No prefered city saved)")
 			os.Exit(1)
 		}	
 		fmt.Printf("Using prefered city: %s.\n", pref.City)	
@@ -50,13 +50,13 @@ func main() {
 	} else {
 		if args[0] == "-c" {
 			if len(args) == 1 {
-				fmt.Println("Error: Valid call is 'weather -c `City`', where `City` is the city you want to know the weather.")
+				fmt.Println("[weather] Error: Valid call is 'weather -c `City`', where `City` is the city you want to know the weather.")
 				os.Exit(1)
 			}
 			city = args[1]
 		} else if args[0] == "-f" {
 			if len(args) == 1 {
-				fmt.Println("Error: Valid call is 'weather -f `City`', where `City` is the city you want to save as preferred city.")
+				fmt.Println("[weather] Error: Valid call is 'weather -f `City`', where `City` is the city you want to save as preferred city.")
 				os.Exit(1)
 			}
 			toWrite := models.Preferences{
@@ -75,7 +75,7 @@ func main() {
 				panic(err.Error())
 			}
 	
-			fmt.Printf("New prefered city is %s.\n", args[1])
+			fmt.Printf("[weather] New prefered city is %s.\n", args[1])
 			return 
 		}
 	}
@@ -84,20 +84,20 @@ func main() {
 	resp, err := http.Get(url)
 
 	if err != nil {
-		panic("Error with API call.")
+		panic("[weather] Error with API call.")
 	}
 
 	defer resp.Body.Close()
 
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
-		panic("Error : Could not read response.")
+		panic("[weather] Error: Could not read response.")
 	}
 
 	res := models.Response{}
 	json.Unmarshal([]byte(body), &res)
 
-	fmt.Printf("Results for %s, %s:\n", city, res.Misc.Country)
-	fmt.Printf("Temperature: %.1f°C\n", res.Main.Temp)
-	fmt.Printf("Weather: %s - (%s)\n", res.Weather[0].Main, res.Weather[0].Desc)
+	fmt.Printf("[weather] Results for %s, %s:\n", city, res.Misc.Country)
+	fmt.Printf("[weather] Temperature: %.1f°C\n", res.Main.Temp)
+	fmt.Printf("[weather] Weather: %s - (%s)\n", res.Weather[0].Main, res.Weather[0].Desc)
 }
