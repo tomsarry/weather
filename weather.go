@@ -38,7 +38,7 @@ func main() {
 	if strings.ContainsAny(flags, "c") {
 		// updated the new saved city
 		if newPref {
-			utils.DispPref(city)
+			utils.DispPref(city, true)
 		} else if city == "" {
 			fmt.Println("[weather] Error: Expected city but received none.")
 			return
@@ -48,6 +48,6 @@ func main() {
 	}
 
 	if flags == "" {
-		utils.DispPref(pref)
+		utils.DispPref(pref, false)
 	}
 }

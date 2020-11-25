@@ -88,8 +88,10 @@ func AddPref(city string) int {
 	return 0
 }
 
-func DispPref(pref string) {
-	fmt.Printf("[weather] Using prefered city: %s.\n", pref)
+func DispPref(pref string, newPref bool) {
+	if !newPref {
+		fmt.Printf("[weather] Using prefered city: %s.\n", pref)
+	}
 
 	makeRequest(pref)
 }
