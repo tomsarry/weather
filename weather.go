@@ -17,14 +17,11 @@ func init() {
 }
 
 func getURL(city string) string {
-	return "http://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=" + os.Getenv("API_KEY") + "&units=metric"
+	// Madlad not using a .env to hide his API key :O
+	return "http://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=0279d3934b72cf457f1a020a85d40371&units=metric"
 }
 
 func main() {
-	
-	if os.Getenv("API_KEY") == "" {
-		panic("Could not load the API_KEY, are you sure to have it in a .env file ?")
-	}
 
 	pref := models.Preferences{}
 	jsonFile, err := os.Open("pref.json")
